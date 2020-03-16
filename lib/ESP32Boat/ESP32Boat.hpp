@@ -100,6 +100,7 @@ namespace ESP32Boat
         auto cfgProp = (speed_percent > 0) ? cfgProp2 : cfgProp1;
         auto gnd = (speed_percent > 0) ? cfgProp1 : cfgProp2;
         speed_percent = abs(speed_percent);
+        speed_percent = (speed_percent > 100) ? 100 : speed_percent;
         uint32_t duty = (uint32_t) speed_percent * cfgProp -> resolution * 0.01;
         ledcWrite(cfgProp -> ch, duty);
         ledcWrite(gnd -> ch, 0);
@@ -109,10 +110,13 @@ namespace ESP32Boat
     {
         angle_deg = (angle_deg > SERVO_MAX_ANGLE) ? SERVO_MAX_ANGLE : angle_deg;
         angle_deg = (angle_deg < SERVO_MIN_ANGLE) ? SERVO_MIN_ANGLE : angle_deg;
-        Serial.println(angle_deg);
         uint32_t duty = (uint32_t) ((angle_deg * SERVO_ANGLE2RANGE + 0.0625) * cfgServo -> resolution);
-        Serial.println(duty);
         ledcWrite(cfgServo -> ch, duty);
+
+        #ifdef DISP_SERIAL
+        Serial.println(angle_deg);
+        Serial.println(duty);
+        #endif
     }
 } // namespace ESP32Boat
 
