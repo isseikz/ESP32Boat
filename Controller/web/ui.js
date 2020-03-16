@@ -96,7 +96,7 @@ onload = function()
         if (CAT_RUDDER == category)
         {
             console.log("rudder");
-            angle = (x - 0.3)*10 *180/Math.PI; 
+            angle = (x - 0.3)*15 *180/Math.PI; 
         } else if(CAT_THROTTLE == category){
             console.log("throttle", speed);
             speed = - (y - 0.5) * 333;
@@ -107,7 +107,7 @@ onload = function()
 
     function updateCanvas()
     {
-        draw(-speed * 0.005, angle * 0.03);   
+        draw(-speed * 0.005, angle * 0.02);   
     }
 
     function onTouchStart(e){
